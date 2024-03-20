@@ -1,41 +1,45 @@
-import React, { useReducer } from 'react'
+import React, { useContext, useReducer } from 'react';
+import { QuotesContext } from '../context/quotesContext';
 
-const CHANGE_INPUT = 'CHANGE_INPUT'
-const RESET_FORM = 'RESET_FORM'
+const CHANGE_INPUT = 'CHANGE_INPUT';
+const RESET_FORM = 'RESET_FORM';
 
 const initialState = {
   authorName: '',
   quoteText: '',
-}
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
     case CHANGE_INPUT: {
-      const { name, value } = action.payload
-      return { ...state, [name]: value }
+      const { name, value } = action.payload;
+      return { ...state, [name]: value };
     }
     case RESET_FORM:
-      return { authorName: '', quoteText: '' }
+      return { authorName: '', quoteText: '' };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default function TodoForm(props) {
-  const { createQuote } = props
-  const [state, dispatch] = useReducer(reducer, initialState)
+export default function TodoForm() {
+  const { createQuote } = useContext(QuotesContext);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const onChange = ({ target: { name, value } }) => {
-    dispatch({ type: CHANGE_INPUT, payload: { name, value } })
-  }
+    dispatch({ type: CHANGE_INPUT, payload: { name, value } });
+  };
+
   const resetForm = () => {
-    dispatch({ type: RESET_FORM })
-  }
+    dispatch({ type: RESET_FORM });
+  };
+
   const onNewQuote = evt => {
-    evt.preventDefault()
-    const { authorName, quoteText } = state
-    createQuote({ authorName, quoteText })
-    resetForm()
-  }
+    evt.preventDefault();
+    const { authorName, quoteText } = state;
+    createQuote({ authorName, quoteText });
+    resetForm();
+  };
 
   return (
     <form id="quoteForm" onSubmit={onNewQuote}>
@@ -65,5 +69,5 @@ export default function TodoForm(props) {
         >DO IT!</button>
       </label>
     </form>
-  )
+  );
 }

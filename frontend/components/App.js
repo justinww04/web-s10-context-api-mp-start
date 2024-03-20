@@ -82,6 +82,8 @@ export default function App() {
   const toggleVisibility = () => {
     dispatch({ type: TOGGLE_VISIBILITY })
   }
+
+  
   return (
     <div id="mp">
       <h2>Module Project</h2>
